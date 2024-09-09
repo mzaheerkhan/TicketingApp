@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3 pt-2" *ngFor="let movie of movieList">
+      <div class="card" (click)="selectMovie(movie)">
+
+        <img src="/assets/kgf.jpg" class="card-img-top" alt="kgf poster image">
+
+        <div class="card-header" [ngClass]="
+            movie.movieName == selectedMovie?.movieName ? 'bg-success' : ''
+          ">
+
+
+          {{ movie.movieName }}
+        </div>
+        <div class="card-body" title="{{ movie.description }}">
+          {{ movie.description }}
+        </div>
+        <div class="card-footer">
+          {{ movie.movieTicket +" "+ "Rs"}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <h5>Available Shows Today</h5>
+
+  <div class="row" *ngFor="let shows of selectedMovie?.showTiming">
+    <div class="col-3 pt-2">
+      <button class="btn btn-primary" [ngClass]="selectedShow == shows ? 'btn-success' : 'btn-danger'"
+        (click)="selectShow(shows)">
+        {{ shows }}
+      </button>
+    </div>
+  </div>
+  <div class="row pt-2" *ngIf="selectedShow != '' ">
+    <div class="col-3">
+      <input type="text" [(ngModel)]="ticketCount" placeholder="Enter Ticket Count" class="form-control" />
+    </div>
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="bookTicket()">
+        Book Ticket
+      </button>
+    </div>
+    <div class="col-5" *ngIf="MovieCost!=0">
+      <p>Selected Movie:<strong>{{selectedMovie?.movieName}}</strong></p>
+      <p>Selected Show: <strong>{{selectedShow}}</strong></p>
+      <p>For {{ticketCount}} Price will be : <strong>{{MovieCost}}</strong> </p>
+
+    </div>
+  </div>
+</div>
